@@ -1,4 +1,5 @@
 const { spawn }  = require('child_process');
+const logs = require('./logs');
 
 function ping(host) {
     return new Promise((resolve, reject) => {
@@ -8,9 +9,11 @@ function ping(host) {
 
         pingProcess.on('exit', (code) => {
             if (code === 0) {
+                logs.log(`${host} está vivo.`);
                 resolve(true); // o host está respondendo ao ping
             } else {
-                resolve(false); // o host não está respodnendo ao ping
+                logs.log(`${host} não está respondendo ao ping.`);
+                resolve(false); // o host não está respondendo ao ping
             }
         });
     });
